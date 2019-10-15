@@ -35,7 +35,7 @@ const Spacer = styled.div`
 const Navbar = ({ user }) => {
   let linkMyNote = '/';
   if (user) {
-    linkMyNote = `/@${user.username}`;
+    linkMyNote = `/?username=${user.username}`;
   }
   return (
     <>

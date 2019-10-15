@@ -9,11 +9,11 @@ import NotePage from './pages/NotePage';
 const App = () => {
   return (
     <>
-      <Route component={NoteListPage} path={['/@:username', '/']} exact />
+      <Route component={NoteListPage} path="/" exact />
       <Route component={LoginPage} path="/login" />
       <Route component={RegisterPage} path="/register" />
       <Route component={WritePage} path="/write" />
-      <Route component={NotePage} path="/@:username/:noteId" />
+      <Route component={NotePage} path="/:noteId" />
     </>
   );
 };
