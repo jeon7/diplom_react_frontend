@@ -35,6 +35,11 @@ const buttonStyle = css`
         background: ${palette.cyan[4]};
       }
     `}
+
+  &:disabled {
+  background: ${palette.gray[3]};
+  color: ${palette.gray[5]};
+  cursor: not-allowed;
 `;
 
 const StyledButton = styled.button`
@@ -49,8 +54,8 @@ const Button = props => {
   return props.to ? (
     <StyledLink {...props} cyan={props.cyan ? 1 : 0} />
   ) : (
-    <StyledButton {...props} />
-  );
+      <StyledButton {...props} />
+    );
 };
 
 export default Button;
