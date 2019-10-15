@@ -18,14 +18,10 @@ const Wrapper = styled(Responsive)`
   display: flex;
   align-items: center;
   justify-content: space-between; /* 자식 엘리먼트 사이에 여백을 최대로 설정 */
-  .logo {
+  .section {
     font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-  }
-  .right {
-    display: flex;
-    align-items: center;
+    font-weight: 400;
+    letter-spacing: 1px;
   }
 `;
 
@@ -45,10 +41,10 @@ const Navbar = ({ user }) => {
     <>
       <NavBlock>
         <Wrapper>
-          <Link to="/" >Public Notes</Link>
-          <Link to={linkMyNote} >My Notes</Link>
-          <Link to="/" >My Bookmark</Link>
-          <Link to="/" >Plan and Shopping</Link>
+          <Link to="/" className="section">Public Notes</Link>
+          <Link to={linkMyNote} className="section">My Notes</Link>
+          <Link to="/" className="section">My Bookmark</Link>
+          <Link to="/" className="section">Plan and Shopping</Link>
         </Wrapper>
       </NavBlock>
       <Spacer />
