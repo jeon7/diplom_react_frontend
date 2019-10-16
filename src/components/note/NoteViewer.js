@@ -4,6 +4,7 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import Button from '../common/Button';
 
 
 const NoteViewerBlock = styled(Responsive)`
@@ -11,14 +12,24 @@ const NoteViewerBlock = styled(Responsive)`
 `;
 const NoteHead = styled.div`
   border-bottom: 1px solid ${palette.gray[2]};
-  padding-bottom: 3rem;
-  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
   h1 {
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 1.5;
     margin: 0;
+    display: inline;
   }
 `;
+const BookmarkButton = styled(Button)`
+  float: right;
+  background: #F4EF4E;
+  color: ${palette.gray[8]};
+  &:hover {
+    background: #EDC448;
+  }
+`;
+
 
 const PortionView = styled.input`
   font-size: 1rem;
@@ -40,7 +51,7 @@ const Textarea = styled.textarea`
   border: none;
 `;
 
-const NoteViewer = ({ note, error, loading, actionButtons }) => {
+const NoteViewer = ({ note, error, loading, actionButtons, isBookmarked, onBookmarkClick }) => {
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -61,7 +72,13 @@ const NoteViewer = ({ note, error, loading, actionButtons }) => {
   return (
     <NoteViewerBlock>
       <NoteHead>
-        <h1>{title}</h1>
+        <div>
+          <h1>{title}</h1>
+          <BookmarkButton onClick={onBookmarkClick}>
+            {isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
+          </BookmarkButton>
+        </div>
+
         <SubInfo
           username={user.username}
           createdDate={createdDate}
@@ -70,7 +87,6 @@ const NoteViewer = ({ note, error, loading, actionButtons }) => {
         <Tags tags={tags} />
       </NoteHead>
       {actionButtons}
-
       <PortionView
         value={showStandardPortion}
         readOnly={true}

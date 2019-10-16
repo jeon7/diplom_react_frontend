@@ -26,4 +26,4 @@ export const updateNote = ({ id, title, standardPortion, ingredients, memo, tags
   });
 
 export const removeNote = id => client.delete(`/api/notes/${id}`);
-// export const listBookmarks = () => client.get(`/api/bookmarks`);
+export const listBookmarks = () => client.get(`/api/bookmarks`);

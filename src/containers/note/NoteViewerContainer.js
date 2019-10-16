@@ -40,6 +40,12 @@ const NoteViewerContainer = ({ match, history }) => {
     };
   }, [dispatch, noteId]);
 
+  //todo
+  const isBookmarked = true;
+  const onBookmarkClick = async () => {
+
+  }
+
   const ownNote = (user && user._id) === (note && note.user._id);
   console.log('ownNote: ', ownNote);
   return (
@@ -48,6 +54,8 @@ const NoteViewerContainer = ({ match, history }) => {
       loading={loading}
       error={error}
       actionButtons={ownNote && <NoteActionButtons onEdit={onEdit} onRemove={onRemove} />}
+      isBookmarked={isBookmarked}
+      onBookmarkClick={onBookmarkClick}
     />
   );
 };

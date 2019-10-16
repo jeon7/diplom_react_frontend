@@ -17,10 +17,13 @@ export const listNotes = createAction(
 );
 
 const listNotesSaga = createRequestSaga(LIST_NOTES, notesAPI.listNotes);
+const listBookmarksSaga = createRequestSaga(LIST_NOTES, notesAPI.listBookmarks);
 export function* notesSaga() {
   yield takeLatest(LIST_NOTES, listNotesSaga);
 }
-
+export function* bookmarksSaga() {
+  yield takeLatest(LIST_NOTES, listBookmarksSaga);
+}
 const initialState = {
   notes: null,
   error: null,
