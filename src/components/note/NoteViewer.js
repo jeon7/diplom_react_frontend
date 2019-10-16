@@ -5,6 +5,7 @@ import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 
+
 const NoteViewerBlock = styled(Responsive)`
   margin-top: 4rem;
 `;
@@ -39,7 +40,7 @@ const Textarea = styled.textarea`
   border: none;
 `;
 
-const NoteViewer = ({ note, error, loading }) => {
+const NoteViewer = ({ note, error, loading, actionButtons }) => {
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -56,6 +57,7 @@ const NoteViewer = ({ note, error, loading }) => {
   const { title, standardPortion, ingredients, memo, user, createdDate, tags } = note;
 
   const showStandardPortion = `Standard Portion: ${standardPortion}`;
+
   return (
     <NoteViewerBlock>
       <NoteHead>
@@ -67,6 +69,8 @@ const NoteViewer = ({ note, error, loading }) => {
         />
         <Tags tags={tags} />
       </NoteHead>
+      {actionButtons}
+
       <PortionView
         value={showStandardPortion}
         readOnly={true}

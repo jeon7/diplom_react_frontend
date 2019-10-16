@@ -15,3 +15,15 @@ export const listNotes = ({ page, username, tag }) => {
   });
   return client.get(`/api/notes?${queryString}`);
 };
+
+export const updateNote = ({ id, title, standardPortion, ingredients, memo, tags }) =>
+  client.patch(`api/notes/${id}`, {
+    title,
+    standardPortion,
+    ingredients,
+    memo,
+    tags
+  });
+
+export const removeNote = id => client.delete(`/api/notes/${id}`);
+// export const listBookmarks = () => client.get(`/api/bookmarks`);

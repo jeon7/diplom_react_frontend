@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderContainer from '../containers/common/HeaderContainer';
 import NavbarContainer from '../containers/common/NavbarContainer';
-import NotesListContainer from '../containers/notes/NotesListContainer';
+import NoteListContainer from '../containers/notes/NoteListContainer';
 import PaginationContainer from '../containers/notes/PaginationContainer';
 
 const NoteListPage = () => {
@@ -9,7 +9,7 @@ const NoteListPage = () => {
     <>
       <HeaderContainer />
       <NavbarContainer />
-      <NotesListContainer />
+      <NoteListContainer />
       <PaginationContainer />
     </>
   );

@@ -26,7 +26,7 @@ const Pagination = ({ page, lastPage, username, tag }) => {
           page === 1 ? undefined : buildLink({ username, tag, page: page - 1 })
         }
       >
-        이전
+        Prev
       </Button>
       <PageNumber>{page}</PageNumber>
       <Button
@@ -37,7 +37,7 @@ const Pagination = ({ page, lastPage, username, tag }) => {
             : buildLink({ username, tag, page: page + 1 })
         }
       >
-        다음
+        Next
       </Button>
     </PaginationBlock>
   );

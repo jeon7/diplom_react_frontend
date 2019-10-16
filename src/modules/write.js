@@ -7,29 +7,51 @@ import { takeLatest } from 'redux-saga/effects';
 
 const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
 const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
+
 const [
   WRITE_NOTE,
   WRITE_NOTE_SUCCESS,
   WRITE_NOTE_FAILURE,
 ] = createRequestActionTypes('write/WRITE_NOTE'); // 포스트 작성
 
+const SET_ORIGINAL_NOTE = 'write/SET_ORIGINAL_NOTE';
+
+const [
+  UPDATE_NOTE,
+  UPDATE_NOTE_SUCCESS,
+  UPDATE_NOTE_FAILURE,
+] = createRequestActionTypes('write/UPDATE_NOTE'); // 포스트 수정
+
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const writeNote = createAction(WRITE_NOTE, ({ title, standardPortion, ingredients, memo, tags }) => ({
-  title,
-  standardPortion,
-  ingredients,
-  memo,
-  tags,
-}));
+export const writeNote = createAction(WRITE_NOTE,
+  ({ title, standardPortion, ingredients, memo, tags }) => ({
+    title,
+    standardPortion,
+    ingredients,
+    memo,
+    tags,
+  }));
+export const setOriginalNote = createAction(SET_ORIGINAL_NOTE, note => note);
+export const updateNote = createAction(UPDATE_NOTE,
+  ({ id, title, standardPortion, ingredients, memo, tags }) => ({
+    id,
+    title,
+    standardPortion,
+    ingredients,
+    memo,
+    tags,
+  }));
 
 // saga 생성
 const writeNoteSaga = createRequestSaga(WRITE_NOTE, notesAPI.writeNote);
+const updateNoteSaga = createRequestSaga(UPDATE_NOTE, notesAPI.updateNote);
 export function* writeSaga() {
   yield takeLatest(WRITE_NOTE, writeNoteSaga);
+  yield takeLatest(UPDATE_NOTE, updateNoteSaga);
 }
 
 const initialState = {
@@ -40,6 +62,7 @@ const initialState = {
   tags: [],
   note: null,
   noteError: null,
+  originalNoteId: null
 };
 
 const write = handleActions(
@@ -65,6 +88,25 @@ const write = handleActions(
       ...state,
       noteError,
     }),
+    // 포스트 수정 성공
+    [UPDATE_NOTE_SUCCESS]: (state, { payload: note }) => ({
+      ...state,
+      note,
+    }),
+    // 포스트 수정 실패
+    [UPDATE_NOTE_FAILURE]: (state, { payload: noteError }) => ({
+      ...state,
+      noteError,
+    }),
+    [SET_ORIGINAL_NOTE]: (state, { payload: note }) => ({
+      ...state,
+      title: note.title,
+      standardPortion: note.standardPortion,
+      ingredients: note.ingredients,
+      memo: note.memo,
+      tags: note.tags,
+      originalNoteId: note._id
+    })
   },
   initialState,
 );

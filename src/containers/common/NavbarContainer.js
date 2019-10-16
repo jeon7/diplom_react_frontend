@@ -4,8 +4,18 @@ import Navbar from '../../components/common/Navbar';
 
 const NavbarContainer = () => {
   const { user } = useSelector(({ user }) => ({ user: user.user }));
+
+  let linkMyNote = '/';
+  let linkMyBookmark = '/';
+  if (user) {
+    linkMyNote = `/?username=${user.username}`;
+    // linkMyBookmark = `/....`;
+  }
+
   return (
-    <Navbar user={user} />
+    <Navbar
+      linkMyNote={linkMyNote}
+      linkMyBookmark={linkMyBookmark} />
   );
 };
 

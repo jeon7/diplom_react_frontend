@@ -32,18 +32,15 @@ const Spacer = styled.div`
   height: 4rem;
 `;
 
-const Navbar = ({ user }) => {
-  let linkMyNote = '/';
-  if (user) {
-    linkMyNote = `/?username=${user.username}`;
-  }
+const Navbar = ({ linkMyNote, linkMyBookmark }) => {
+
   return (
     <>
       <NavBlock>
         <Wrapper>
           <Link to="/" className="section">Public Notes</Link>
           <Link to={linkMyNote} className="section">My Notes</Link>
-          <Link to="/" className="section">My Bookmark</Link>
+          <Link to={linkMyBookmark} className="section">My Bookmark</Link>
           <Link to="/" className="section">Plan and Shopping</Link>
         </Wrapper>
       </NavBlock>
