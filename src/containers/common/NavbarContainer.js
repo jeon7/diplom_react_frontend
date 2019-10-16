@@ -7,15 +7,18 @@ const NavbarContainer = () => {
 
   let linkMyNote = '/';
   let linkMyBookmark = '/';
+  let linkShopping = '/';
   if (user) {
     linkMyNote = `/?username=${user.username}`;
     linkMyBookmark = `/?bookmark=list`;
+    linkShopping = '/shopping';
   }
 
   return (
     <Navbar
       linkMyNote={linkMyNote}
-      linkMyBookmark={linkMyBookmark} />
+      linkMyBookmark={linkMyBookmark}
+      linkShopping={linkShopping} />
   );
 };
 

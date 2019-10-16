@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
+import Button from './Button';
 
 const NavBlock = styled.div`
   position: fixed;
@@ -32,7 +33,7 @@ const Spacer = styled.div`
   height: 4rem;
 `;
 
-const Navbar = ({ linkMyNote, linkMyBookmark }) => {
+const Navbar = ({ linkMyNote, linkMyBookmark, linkShopping }) => {
 
   return (
     <>
@@ -40,8 +41,8 @@ const Navbar = ({ linkMyNote, linkMyBookmark }) => {
         <Wrapper>
           <Link to="/" className="section">Public Notes</Link>
           <Link to={linkMyNote} className="section">My Notes</Link>
-          <Link to={linkMyBookmark} className="section">My Bookmark</Link>
-          <Link to="/" className="section">Plan and Shopping</Link>
+          <Link to={linkMyBookmark} className="section">My Bookmarks</Link>
+          <Button to={linkShopping} className="section">Shopping</Button>
         </Wrapper>
       </NavBlock>
       <Spacer />
