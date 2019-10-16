@@ -46,7 +46,7 @@ const NoteItem = ({ note }) => {
   return (
     <NoteItemBlock>
       <h2>
-        <Link to={`/${_id}`}>{title}</Link>
+        <Link to={`/@${user.username}/${_id}`}>{title}</Link>
       </h2>
       <SubInfo
         username={user.username}
