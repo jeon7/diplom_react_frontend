@@ -61,7 +61,7 @@ const NoteItem = ({ note }) => {
 const NoteList = ({ notes, loading, error, showWriteButton }) => {
   // 에러 발생 시
   if (error) {
-    return <NoteListBlock>Error!</NoteListBlock>;
+    return <NoteListBlock>NoteList Error!</NoteListBlock>;
   }
 
   return (

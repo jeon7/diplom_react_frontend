@@ -9,7 +9,7 @@ const NavbarContainer = () => {
   let linkMyBookmark = '/';
   if (user) {
     linkMyNote = `/?username=${user.username}`;
-    // linkMyBookmark = `/....`;
+    linkMyBookmark = `/?bookmark=list`;
   }
 
   return (

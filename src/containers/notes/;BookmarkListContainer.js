@@ -3,23 +3,23 @@ import qs from 'qs';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import NoteList from '../../components/notes/NoteList';
-import { listNotes } from '../../modules/notes';
+import { listBookmarks } from '../../modules/;bookmarks';
 
-const NoteListContainer = ({ location }) => {
+const BookmarkListContainer = ({ location }) => {
   const dispatch = useDispatch();
   const { notes, error, loading, user } = useSelector(
-    ({ notes, loading, user }) => ({
-      notes: notes.notes,
-      error: notes.error,
-      loading: loading['notes/LIST_NOTES'],
+    ({ bookmarks, loading, user }) => ({
+      notes: bookmarks.notes,
+      error: bookmarks.error,
+      loading: loading['bookmarks/LIST_BOOKMARKS'],
       user: user.user,
     }),
   );
   useEffect(() => {
-    const { tag, username, page, bookmark, id } = qs.parse(location.search, {
+    const { tag, username, page } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
-    dispatch(listNotes({ tag, username, page, bookmark, id }));
+    dispatch(listBookmarks({ tag, username, page }));
   }, [dispatch, location.search]);
 
   return (
@@ -32,4 +32,4 @@ const NoteListContainer = ({ location }) => {
   );
 };
 
-export default withRouter(NoteListContainer);
+export default withRouter(BookmarkListContainer);

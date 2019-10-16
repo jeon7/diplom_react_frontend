@@ -11,19 +11,18 @@ const [
   LIST_NOTES_FAILURE,
 ] = createRequestActionTypes('notes/LIST_NOTES');
 
+
 export const listNotes = createAction(
   LIST_NOTES,
-  ({ tag, username, page }) => ({ tag, username, page }),
+  ({ tag, username, page, bookmark, id }) => ({ tag, username, page, bookmark, id }),
 );
 
 const listNotesSaga = createRequestSaga(LIST_NOTES, notesAPI.listNotes);
-const listBookmarksSaga = createRequestSaga(LIST_NOTES, notesAPI.listBookmarks);
+
 export function* notesSaga() {
   yield takeLatest(LIST_NOTES, listNotesSaga);
 }
-export function* bookmarksSaga() {
-  yield takeLatest(LIST_NOTES, listBookmarksSaga);
-}
+
 const initialState = {
   notes: null,
   error: null,

@@ -5,7 +5,8 @@ import loading from './loading';
 import user, { userSaga } from './user';
 import write, { writeSaga } from './write';
 import note, { noteSaga } from './note';
-import notes, { notesSaga } from './notes'
+import notes, { notesSaga, } from './notes';
+// import bookmarks, { bookmarksSaga } from './bookmarks';
 
 const rootReducer = combineReducers({
   auth,
@@ -13,11 +14,14 @@ const rootReducer = combineReducers({
   user,
   write,
   note,
-  notes
+  notes,
+  // bookmarks
 });
 
 export function* rootSaga() {
-  yield all([authSaga(), userSaga(), writeSaga(), noteSaga(), notesSaga()]);
+  yield all([authSaga(), userSaga(), writeSaga(), noteSaga(), notesSaga(),
+    // bookmarksSaga()
+  ]);
 }
 
 export default rootReducer;

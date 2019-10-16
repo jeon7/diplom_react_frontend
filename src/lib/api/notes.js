@@ -6,14 +6,24 @@ export const writeNote = ({ title, standardPortion, ingredients, memo, tags }) =
 
 export const readNote = id => client.get(`/api/notes/${id}`);
 
-// e.g) /api/notes?username=tester&page=2
-export const listNotes = ({ page, username, tag }) => {
-  const queryString = qs.stringify({
-    page,
-    username,
-    tag,
-  });
-  return client.get(`/api/notes?${queryString}`);
+// e.g) /api/notes?username=tester&page=2&tag=drinks
+// bookmark list
+export const listNotes = ({ page, username, tag, bookmark }) => {
+  if (bookmark !== undefined) {
+    const queryStringBookmarkCtrl = qs.stringify({
+      bookmark
+    });
+    console.log(queryStringBookmarkCtrl);
+    return client.patch(`/api/notes?${queryStringBookmarkCtrl}`);
+
+  } else {
+    const queryStringNoteList = qs.stringify({
+      page,
+      username,
+      tag,
+    });
+    return client.get(`/api/notes?${queryStringNoteList}`);
+  }
 };
 
 export const updateNote = ({ id, title, standardPortion, ingredients, memo, tags }) =>
@@ -26,4 +36,7 @@ export const updateNote = ({ id, title, standardPortion, ingredients, memo, tags
   });
 
 export const removeNote = id => client.delete(`/api/notes/${id}`);
-export const listBookmarks = () => client.get(`/api/bookmarks`);
+
+export const addBookmark = id => client.patch(`/api/notes?bookmark=add&id=${id}`);
+export const removeBookmark = id => client.patch(`/api/notes?bookmark=remove&id=${id}`);
+

@@ -51,13 +51,13 @@ const Textarea = styled.textarea`
   border: none;
 `;
 
-const NoteViewer = ({ note, error, loading, actionButtons, isBookmarked, onBookmarkClick }) => {
+const NoteViewer = ({ note, error, loading, actionButtons, isBookmarked, onBookmarkAdd, onBookmarkRemove }) => {
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
       return <NoteViewerBlock>Can not find the note</NoteViewerBlock>;
     }
-    return <NoteViewerBlock>Error!</NoteViewerBlock>;
+    return <NoteViewerBlock>NoteViwer Error!</NoteViewerBlock>;
   }
 
   // 로딩중이거나, 아직 포스트 데이터가 없을 시
@@ -66,6 +66,13 @@ const NoteViewer = ({ note, error, loading, actionButtons, isBookmarked, onBookm
   }
 
   const { title, standardPortion, ingredients, memo, user, createdDate, tags } = note;
+
+  let onBookmarkClick = null;
+  if (isBookmarked) {
+    onBookmarkClick = onBookmarkRemove;
+  } else {
+    onBookmarkClick = onBookmarkAdd;
+  }
 
   const showStandardPortion = `Standard Portion: ${standardPortion}`;
 
