@@ -83,24 +83,41 @@ const DescHeader = styled.div`
 
 class Shopping extends Component {
 
-  state = {
-    bookmarkedNotes: [
-      { noteTitle: "bookmark item 1 title", noteId: "1", zone: "bookmarkedZone" },
-      { noteTitle: "bookmark item 2 title", noteId: "2", zone: "bookmarkedZone" },
-      { noteTitle: "shoppingCart item 3 title", noteId: "3", zone: "shoppingCartZone" }
-    ]
+  constructor(props) {
+    super(props);
+    this.state = {
+      bookmarkedNotes: null
+    }
   }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps() called');
+    // get first props from ShoppingContainer
+    if (!prevState.bookmarkedNotes) {
+      console.log('!prevState.bookmarkedNotes');
+      console.log(nextProps.bookmarkedNotes);
+      console.log(prevState.bookmarkedNotes);
+
+      if (nextProps.bookmarkedNotes) {
+        nextProps.bookmarkedNotes.forEach((note) => {
+          note.zone = 'bookmarkedZone';
+        });
+        console.log('Shopping.js-nextProps.bookmarkedNotes after forEach: ', nextProps.bookmarkedNotes);
+      }
+      return { bookmarkedNotes: nextProps.bookmarkedNotes };
+    }
+    return null;
+  }
+
 
   onDragStart = (ev, noteId) => {
     console.log('onDragStart: ', noteId);
-    // ev.dataTransfer.effectAllowed = 'move';
     ev.dataTransfer.setData("noteId", noteId);
     return true;
   }
 
   onDragOver = ev => {
     ev.preventDefault();
-    console.log('onDragOver: ');
   }
 
   onDrop = (ev, cat) => {
@@ -109,8 +126,9 @@ class Shopping extends Component {
     console.log('onDrop: ');
     let noteId = ev.dataTransfer.getData("noteId");
     console.log('noteId: ', noteId);
+
     let nextBookmarkedNotes = this.state.bookmarkedNotes.filter((note) => {
-      if (note.noteId === noteId) {
+      if (note._id === noteId) {
         note.zone = cat;
       }
       return note;
@@ -118,40 +136,49 @@ class Shopping extends Component {
 
     this.setState({
       ...this.state,
-      nextBookmarkedNotes
+      bookmarkedNotes: nextBookmarkedNotes
     });
+
     return false;
   }
 
+
+
+
+
   render() {
-    let notes = {
+    let noteZone = {
       bookmarkedZone: [],
       shoppingCartZone: []
     };
 
-    this.state.bookmarkedNotes.forEach((note) => {
-      notes[note.zone].push(
-        <Item
-          draggable={true}
-          noteId={note.noteId}
-          onDragStart={(e) => this.onDragStart(e, note.noteId)}>
-          {note.noteTitle}
-        </Item>
-      );
-    })
+    if (this.state.bookmarkedNotes) {
+      this.state.bookmarkedNotes.forEach((note) => {
+        noteZone[note.zone].push(
+          <Item
+            draggable={true}
+            noteId={note._id}
+            key={note._id}
+            onDragStart={(e) => this.onDragStart(e, note._id)}>
+            {note.title}
+          </Item>
+        );
+      })
+    }
 
     return (
       <>
         <ShoppingBlock>
           <BookmarksZone>
             <DescHeader> bookmarked notes: drag to shopping cart </DescHeader>
-            {notes.bookmarkedZone}
+            {noteZone.bookmarkedZone}
           </BookmarksZone>
           <ShoppingCartZone
             onDragOver={(e) => this.onDragOver(e)}
-            onDrop={(e) => this.onDrop(e, "shoppingCartZone")} >
+            onDrop={(e) => this.onDrop(e, "shoppingCartZone")}
+          >
             <DescHeader> shopping cart: drop here </DescHeader>
-            {notes.shoppingCartZone}
+            {noteZone.shoppingCartZone}
           </ShoppingCartZone>
         </ShoppingBlock>
         <CalculateBlock>

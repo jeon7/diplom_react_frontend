@@ -51,7 +51,7 @@ const NoteViewerContainer = ({ match, history }) => {
 
   useEffect(() => {
     dispatch(check());
-  }, [dispatch])
+  }, [dispatch]);
 
   let bookmarkedNoteIds = null;
   let isBookmarked = false;
