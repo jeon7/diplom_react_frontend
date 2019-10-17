@@ -135,7 +135,7 @@ class Shopping extends Component {
       let noteId = ev.dataTransfer.getData("noteId");
       console.log('noteId: ', noteId);
 
-      // change attribute zone to shoppingCartZone from bookmarkedNoteZone
+      // change attribute zone to shoppingCartZone from bookmarkedZone
       let nextBookmarkedNotes = this.state.bookmarkedNotes.filter((note) => {
         if (note._id === noteId) {
           note.zone = cat;
@@ -159,13 +159,19 @@ class Shopping extends Component {
         ...this.state,
         bookmarkedNotes: nextBookmarkedNotes2
       });
-      console.log("bookmarkedNotes: ", this.state.bookmarkedNotes);
+      console.log("bookmarkedNotes after adding portion: ", this.state.bookmarkedNotes);
     }
     return false;
   }
 
   onCalculateClick = () => {
-    alert('calculate');
+    let shoppingCartObj = [];
+    this.state.bookmarkedNotes.filter((note) => {
+      if (note.zone === 'shoppingCartZone') {
+        shoppingCartObj.push(note);
+      }
+    });
+    console.log("shoppingCartObj: ", shoppingCartObj);
   }
 
   render() {
