@@ -10,7 +10,7 @@ const ShoppingContainer = () => {
     ({ notes, loading, user }) => ({
       notes: notes.notes,
       error: notes.error,
-      // loading: loading['notes/LIST_NOTES'],
+      loading: loading['notes/LIST_NOTES'],
       // user: user.user
     }),
   );
@@ -26,8 +26,10 @@ const ShoppingContainer = () => {
     dispatch(listNotes({ tag, username, page, bookmark, id }));
   }, [dispatch]);
 
+  //todo: excute after loading=(false->true->false), useEffect
   let bookmarkedNotes = notes;
 
+  console.log('shoppingContainer-bookmarkedNotes: ', bookmarkedNotes);
   return (
     <>
       <Shopping bookmarkedNotes={bookmarkedNotes} error={error} />

@@ -86,15 +86,15 @@ class Shopping extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookmarkedNotes: null
+      bookmarkedNotes: null,
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log('getDerivedStateFromProps() called');
     // get first props from ShoppingContainer
-    if (!prevState.bookmarkedNotes) {
-      console.log('!prevState.bookmarkedNotes');
+    if (!prevState.bookmarkedNotes && (prevState.bookmarkedNotes !== nextProps.bookmarkedNotes)) {
+      console.log('!prevState.bookmarkedNotes && (prevState.bookmarkedNotes !== nextProps.bookmarkedNotes');
       console.log(nextProps.bookmarkedNotes);
       console.log(prevState.bookmarkedNotes);
 
@@ -120,31 +120,53 @@ class Shopping extends Component {
     ev.preventDefault();
   }
 
+
   onDrop = (ev, cat) => {
     ev.preventDefault();
     ev.stopPropagation();
     console.log('onDrop: ');
-    let noteId = ev.dataTransfer.getData("noteId");
-    console.log('noteId: ', noteId);
 
-    let nextBookmarkedNotes = this.state.bookmarkedNotes.filter((note) => {
-      if (note._id === noteId) {
-        note.zone = cat;
-      }
-      return note;
-    });
+    // Check Prompt
+    const cookingPortion = prompt("Please enter cooking portion", "4");
+    if (cookingPortion === null || cookingPortion === "") {
+      return;
+    } else {
 
-    this.setState({
-      ...this.state,
-      bookmarkedNotes: nextBookmarkedNotes
-    });
+      let noteId = ev.dataTransfer.getData("noteId");
+      console.log('noteId: ', noteId);
 
+      // change attribute zone to shoppingCartZone from bookmarkedNoteZone
+      let nextBookmarkedNotes = this.state.bookmarkedNotes.filter((note) => {
+        if (note._id === noteId) {
+          note.zone = cat;
+        }
+        return note;
+      });
+      this.setState({
+        ...this.state,
+        bookmarkedNotes: nextBookmarkedNotes
+      });
+
+      // add attribute cookingPortion 
+      console.log("cookingPortion: ", cookingPortion);
+      let nextBookmarkedNotes2 = this.state.bookmarkedNotes.filter((note) => {
+        if (note._id === noteId) {
+          note.cookingPortion = cookingPortion;
+        }
+        return note;
+      });
+      this.setState({
+        ...this.state,
+        bookmarkedNotes: nextBookmarkedNotes2
+      });
+      console.log("bookmarkedNotes: ", this.state.bookmarkedNotes);
+    }
     return false;
   }
 
-
-
-
+  onCalculateClick = () => {
+    alert('calculate');
+  }
 
   render() {
     let noteZone = {
@@ -183,7 +205,7 @@ class Shopping extends Component {
         </ShoppingBlock>
         <CalculateBlock>
           <CalculatedResultBox />
-          <StyledButton>
+          <StyledButton onClick={this.onCalculateClick}>
             Calculate
           </StyledButton>
         </CalculateBlock>
