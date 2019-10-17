@@ -165,14 +165,51 @@ class Shopping extends Component {
   }
 
   onCalculateClick = () => {
-    let shoppingCartObj = [];
+    let shoppingCartObjArray = [];
     this.state.bookmarkedNotes.filter((note) => {
       if (note.zone === 'shoppingCartZone') {
-        shoppingCartObj.push(note);
+        shoppingCartObjArray.push(note);
       }
     });
-    console.log("shoppingCartObj: ", shoppingCartObj);
+    console.log("shoppingCartObjArray: ", shoppingCartObjArray);
+
+    // get meaningful data for calculation from shoppingCartObjArray
+    let shoppingDataObjArray = [];
+    shoppingCartObjArray.forEach((shoppingCartObj) => {
+      let shoppingDataObj = {};
+      shoppingDataObj.portionWeight = (parseFloat(shoppingCartObj.cookingPortion)) / shoppingCartObj.standardPortion;
+      shoppingDataObj.ingredients = shoppingCartObj.ingredients;
+      shoppingDataObjArray.push(shoppingDataObj);
+    });
+    console.log("shoppingDataObjArray: ", shoppingDataObjArray);
+
+    // get all Ingredients with amount calculated
+    let allIngredientsWithWeightedAmount = [];
+    shoppingDataObjArray.forEach((shoppingDataObj) => {
+      let ingredientsArray = shoppingDataObj.ingredients.split(';');
+      let ingredientsArrayTrimed = []; // ["fruit, banana, 100, g", ...]
+      ingredientsArray.forEach((ingredient) => {
+        ingredientsArrayTrimed.push(ingredient.trim());
+      });
+      ingredientsArrayTrimed.forEach((ingredientTrimed) => {
+        let ingredientsElementArray = ingredientTrimed.split(',');
+        console.log("ingredientsElementArray: ", ingredientsElementArray);
+        let amount = parseFloat(ingredientsElementArray[2]);
+        console.log("amount: ", amount);
+        console.log("shoppingDataObj.portionWeight: ", shoppingDataObj.portionWeight);
+        let portionAmount = amount * shoppingDataObj.portionWeight;
+        console.log("portionAmount: ", portionAmount);
+        ingredientsElementArray[2] = portionAmount;
+        console.log("ingredientsElementArray: ", ingredientsElementArray);
+        allIngredientsWithWeightedAmount.push(ingredientsElementArray);
+      });
+    });
+    console.log("allIngredientsWithAmount: ", allIngredientsWithWeightedAmount);
+
+
   }
+
+
 
   render() {
     let noteZone = {

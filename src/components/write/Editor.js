@@ -63,10 +63,10 @@ const Editor = ({ title, standardPortion, ingredients, memo, onChangeField }) =>
   comma seperate for category, igredient name, amount, unit
 
   e.g)
-  dairy, milk, 1000, ml; 
-  fruit, banana, 100, g; 
-  etc, ice cube, 100, g;
-  etc, sugar, 50, g; 
+  dairy,milk,1000,ml; 
+  fruit,banana,100,g; 
+  etc,ice cube,100,g;
+  etc,sugar,50,g; 
   `;
 
   const memoPlaceholder = `
