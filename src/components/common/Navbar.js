@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Responsive from './Responsive';
-import Button from './Button';
 
 const NavBlock = styled.div`
   position: fixed;
@@ -42,7 +41,7 @@ const Navbar = ({ linkMyNote, linkMyBookmark, linkShopping }) => {
           <Link to="/" className="section">Public Notes</Link>
           <Link to={linkMyNote} className="section">My Notes</Link>
           <Link to={linkMyBookmark} className="section">My Bookmarks</Link>
-          <Button to={linkShopping} className="section">Shopping</Button>
+          <Link to={linkShopping} className="section">Shopping</Link>
         </Wrapper>
       </NavBlock>
       <Spacer />
