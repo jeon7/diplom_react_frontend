@@ -41,22 +41,23 @@ const CalculateBlock = styled.div`
   width: 95%;
 `;
 
-/* TagBox에서 사용하는 버튼과 일치하는 높이로 설정 후 서로 간의 여백 지정 */
-const StyledButton = styled(Button)`
-  height: 2.125rem;
-  width: 30%;
-  margin: 1rem 1rem 1rem 1rem;
-  & + & {
-    margin-left: 0.5rem;
-  }
-`;
-
 const CalculatedResultBox = styled.textarea`
   margin: 1rem 1rem 1rem 1rem;
   clear: both;
   align-self: center;
   width: 95%;
   min-height: 15rem;
+`;
+
+/* TagBox에서 사용하는 버튼과 일치하는 높이로 설정 후 서로 간의 여백 지정 */
+const CalculateButton = styled(Button)`
+  height: 2.125rem;
+  width: 30%;
+  text-align: center;
+  margin: 1rem 1rem 1rem 1rem;
+  & + & {
+    margin-left: 0.5rem;
+  }
 `;
 
 const Item = styled.div`
@@ -87,6 +88,7 @@ class Shopping extends Component {
     super(props);
     this.state = {
       bookmarkedNotes: null,
+      calculatedResultStr: 'hi hi'
     }
   }
 
@@ -208,11 +210,12 @@ class Shopping extends Component {
         allIngredientsWithWeightedAmount.push(ingredientsElementArray);
       });
     });
-    // todo
+    // this console.log allIngredientsWithWeightedAmount value is affected by next algorithm 
     console.log("allIngredientsWithWeightedAmount: ", allIngredientsWithWeightedAmount); // should be array of mixed array
 
+
     // grouping same ingredients
-    let ingredients = allIngredientsWithWeightedAmount; // change to short
+    let ingredients = allIngredientsWithWeightedAmount.concat(); // change to short name 
     let sameIngredientGroup = [];
     let skipIndex = [];
     let calculatedResult = [];
@@ -250,10 +253,15 @@ class Shopping extends Component {
     console.log(strIngredientsArray);
     let strIngredients = strIngredientsArray.join('\n');
     console.log(strIngredients);
-    this.calculatedResultStr = strIngredients;
+
+    this.setState({
+      ...this.state,
+      calculatedResultStr: strIngredients
+    });
+
+    // alert(strIngredients);
   }
 
-  calculatedResultStr = null;
 
   render() {
     let noteZone = {
@@ -291,10 +299,10 @@ class Shopping extends Component {
           </ShoppingCartZone>
         </ShoppingBlock>
         <CalculateBlock>
-          <CalculatedResultBox value={this.calulatedResultStr} />
-          <StyledButton onClick={this.onCalculateClick}>
+          <CalculatedResultBox value={this.state.calculatedResultStr} />
+          <CalculateButton onClick={this.onCalculateClick}>
             Calculate
-          </StyledButton>
+          </CalculateButton>
         </CalculateBlock>
       </>
     );
