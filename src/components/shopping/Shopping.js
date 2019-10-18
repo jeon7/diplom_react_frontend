@@ -206,6 +206,32 @@ class Shopping extends Component {
     });
     console.log("allIngredientsWithAmount: ", allIngredientsWithWeightedAmount);
 
+    // grouping same ingredients
+    let ingredients = allIngredientsWithWeightedAmount; // change to short
+    let sameIngredientGroup = [];
+    let skipIndex = [];
+    // let calculatedResult = [];
+    for (let i = 0; i < ingredients.length; i++) {
+      let sameIngredientIndex = [];
+      if (!skipIndex.includes(i)) {
+        let amount = 0;
+        for (let j = 0; j < ingredients.length; j++) {
+          if (ingredients[i][1] === ingredients[j][1]) {
+            sameIngredientIndex.push(j);
+            skipIndex.push(j);
+            console.log("ingredients[j][2]: ", ingredients[j][2]);
+            amount = amount + ingredients[j][2];
+          }
+          console.log("amount: ", amount);
+        }
+        sameIngredientIndex.push(amount);
+        sameIngredientGroup.push(sameIngredientIndex);
+        // calculatedResult.push(ingredients[sameIngredientIndex[0]]);
+      }
+    }
+    console.log(sameIngredientGroup);
+    // console.log(calculatedResult);
+
 
   }
 
