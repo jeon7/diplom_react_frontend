@@ -170,6 +170,7 @@ class Shopping extends Component {
       if (note.zone === 'shoppingCartZone') {
         shoppingCartObjArray.push(note);
       }
+      return note;
     });
     console.log("shoppingCartObjArray: ", shoppingCartObjArray);
 
@@ -177,7 +178,7 @@ class Shopping extends Component {
     let shoppingDataObjArray = [];
     shoppingCartObjArray.forEach((shoppingCartObj) => {
       let shoppingDataObj = {};
-      shoppingDataObj.portionWeight = (parseFloat(shoppingCartObj.cookingPortion)) / shoppingCartObj.standardPortion;
+      shoppingDataObj.portionWeight = parseFloat(shoppingCartObj.cookingPortion) / parseFloat(shoppingCartObj.standardPortion);
       shoppingDataObj.ingredients = shoppingCartObj.ingredients;
       shoppingDataObjArray.push(shoppingDataObj);
     });
@@ -187,30 +188,34 @@ class Shopping extends Component {
     let allIngredientsWithWeightedAmount = [];
     shoppingDataObjArray.forEach((shoppingDataObj) => {
       let ingredientsArray = shoppingDataObj.ingredients.split(';');
-      let ingredientsArrayTrimed = []; // ["fruit, banana, 100, g", ...]
+      let ingredientsArrayTrimed = [];
       ingredientsArray.forEach((ingredient) => {
         ingredientsArrayTrimed.push(ingredient.trim());
       });
+      console.log(ingredientsArrayTrimed) //string array ["fruit, banana, 100, g", "fruit, apple, 200, g", ...]
+
       ingredientsArrayTrimed.forEach((ingredientTrimed) => {
         let ingredientsElementArray = ingredientTrimed.split(',');
-        console.log("ingredientsElementArray: ", ingredientsElementArray);
+        console.log("ingredientsElementArray before portion weight apply: ", ingredientsElementArray); // string array ["fruit", "banana", "100", "g"]
         let amount = parseFloat(ingredientsElementArray[2]);
         console.log("amount: ", amount);
         console.log("shoppingDataObj.portionWeight: ", shoppingDataObj.portionWeight);
         let portionAmount = amount * shoppingDataObj.portionWeight;
         console.log("portionAmount: ", portionAmount);
-        ingredientsElementArray[2] = portionAmount;
-        console.log("ingredientsElementArray: ", ingredientsElementArray);
+
+        ingredientsElementArray.splice(2, 1, portionAmount);
+        console.log("ingredientsElementArray after portion weight apply: ", ingredientsElementArray); // mixed array ["fruit", "banana", 200, "g"]
         allIngredientsWithWeightedAmount.push(ingredientsElementArray);
       });
     });
-    console.log("allIngredientsWithAmount: ", allIngredientsWithWeightedAmount);
+    // todo
+    console.log("allIngredientsWithWeightedAmount: ", allIngredientsWithWeightedAmount); // should be array of mixed array
 
     // grouping same ingredients
     let ingredients = allIngredientsWithWeightedAmount; // change to short
     let sameIngredientGroup = [];
     let skipIndex = [];
-    // let calculatedResult = [];
+    let calculatedResult = [];
     for (let i = 0; i < ingredients.length; i++) {
       let sameIngredientIndex = [];
       if (!skipIndex.includes(i)) {
@@ -219,23 +224,36 @@ class Shopping extends Component {
           if (ingredients[i][1] === ingredients[j][1]) {
             sameIngredientIndex.push(j);
             skipIndex.push(j);
-            console.log("ingredients[j][2]: ", ingredients[j][2]);
+            // console.log("ingredients[j][2]: ", ingredients[j][2]);
             amount = amount + ingredients[j][2];
           }
-          console.log("amount: ", amount);
+          // console.log("amount: ", amount);
         }
         sameIngredientIndex.push(amount);
         sameIngredientGroup.push(sameIngredientIndex);
-        // calculatedResult.push(ingredients[sameIngredientIndex[0]]);
+        // amount 소수 둘째 자리 까지만 표시
+        const newAmount = amount.toFixed(2);
+        console.log("newAmount: ", newAmount);
+        // 계산된 amount 값으로 교체 
+        ingredients[sameIngredientIndex[0]].splice(2, 1, newAmount);
+        calculatedResult.push(ingredients[sameIngredientIndex[0]]);
       }
     }
     console.log(sameIngredientGroup);
-    // console.log(calculatedResult);
+    console.log(calculatedResult);
 
-
+    let strIngredientsArray = [];
+    calculatedResult.forEach((calculatedIngredient) => {
+      strIngredientsArray.push(calculatedIngredient.join(' '));
+    });
+    strIngredientsArray.sort();
+    console.log(strIngredientsArray);
+    let strIngredients = strIngredientsArray.join('\n');
+    console.log(strIngredients);
+    this.calculatedResultStr = strIngredients;
   }
 
-
+  calculatedResultStr = null;
 
   render() {
     let noteZone = {
@@ -273,7 +291,7 @@ class Shopping extends Component {
           </ShoppingCartZone>
         </ShoppingBlock>
         <CalculateBlock>
-          <CalculatedResultBox />
+          <CalculatedResultBox value={this.calulatedResultStr} />
           <StyledButton onClick={this.onCalculateClick}>
             Calculate
           </StyledButton>
