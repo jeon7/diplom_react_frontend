@@ -6,11 +6,11 @@ import { list } from '../../../node_modules/postcss/lib/postcss';
 
 const ShoppingContainer = () => {
   const dispatch = useDispatch();
-  const { notes, error, loading, user } = useSelector(
-    ({ notes, loading, user }) => ({
+  const { notes, error } = useSelector(
+    ({ notes }) => ({
       notes: notes.notes,
       error: notes.error,
-      loading: loading['notes/LIST_NOTES'],
+      // loading: loading['notes/LIST_NOTES'],
       // user: user.user
     }),
   );

@@ -9,7 +9,7 @@ import NoteActionButtons from '../../components/note/NoteActionButtons';
 import { removeNote, addBookmark, removeBookmark } from '../../lib/api/notes';
 
 const NoteViewerContainer = ({ match, history }) => {
-  // 처음 마운트될 때 포스트 읽기 API 요청
+  // when first mounted, request read note API 
   const { noteId } = match.params;
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const NoteViewerContainer = ({ match, history }) => {
   const onRemove = async () => {
     try {
       await removeNote(noteId);
-      history.push('/'); // 홈으로 이동
+      history.push('/'); // link to home
     } catch (e) {
       console.log(e);
     }
@@ -37,18 +37,16 @@ const NoteViewerContainer = ({ match, history }) => {
 
   useEffect(() => {
     dispatch(readNote(noteId));
-    // 언마운트될 때 리덕스에서 포스트 데이터 없애기
+    // when unmounted, delete note
     return () => {
       dispatch(unloadNote());
     };
   }, [dispatch, noteId]);
 
   /////////////////////////////////////////////////////////////////////
-  // for bookmark add remove
-  /////////////////////////////////////////////////////////////////////
+  // for bookmark add remove, todo: make seperate component
 
   // check user bookmarks
-
   useEffect(() => {
     dispatch(check());
   }, [dispatch]);

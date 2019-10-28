@@ -18,7 +18,7 @@ const WriteActionButtonsContainer = ({ history }) => {
       originalNoteId: write.originalNoteId
     }));
 
-  // 포스트 등록
+  // publish note
   const onPublish = () => {
     if (originalNoteId) {
       dispatch(
@@ -42,12 +42,11 @@ const WriteActionButtonsContainer = ({ history }) => {
       }))
   };
 
-  // 취소
   const onCancel = () => {
     history.goBack();
   };
 
-  // 성공 혹은 실패시 할 작업
+  // actions after sucess or fail
   useEffect(() => {
     if (note) {
       const { _id, user } = note;

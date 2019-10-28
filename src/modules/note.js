@@ -10,7 +10,7 @@ const [
   READ_NOTE_SUCCESS,
   READ_NOTE_FAILURE,
 ] = createRequestActionTypes('note/READ_NOTE');
-const UNLOAD_NOTE = 'note/UNLOAD_NOTE'; // 포스트 페이지에서 벗어날 때 데이터 비우기
+const UNLOAD_NOTE = 'note/UNLOAD_NOTE';
 
 export const readNote = createAction(READ_NOTE, id => id);
 export const unloadNote = createAction(UNLOAD_NOTE);

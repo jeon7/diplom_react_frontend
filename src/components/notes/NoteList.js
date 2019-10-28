@@ -20,7 +20,6 @@ const WriteNoteButtonWrapper = styled.div`
 const NoteItemBlock = styled.div`
   padding-top: 3rem;
   padding-bottom: 3rem;
-  /* 맨 위 포스트는 padding-top 없음 */
   &:first-child {
     padding-top: 0;
   }
@@ -59,7 +58,6 @@ const NoteItem = ({ note }) => {
 };
 
 const NoteList = ({ notes, loading, error, showWriteButton }) => {
-  // 에러 발생 시
   if (error) {
     return <NoteListBlock>NoteList Error!</NoteListBlock>;
   }
@@ -73,7 +71,6 @@ const NoteList = ({ notes, loading, error, showWriteButton }) => {
           </Button>
         )}
       </WriteNoteButtonWrapper>
-      {/*  로딩 중 아니고, 포스트 배열이 존재할 때만 보여줌 */}
       {!loading && notes && (
         <div>
           {notes.map(note => (

@@ -5,7 +5,7 @@ import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 
 /**
- * 회원가입 또는 로그인 폼을 보여줍니다.
+ * show register or login form
  */
 
 const AuthFormBlock = styled.div`
@@ -17,7 +17,7 @@ const AuthFormBlock = styled.div`
 `;
 
 /**
- * 스타일링된 input
+ * styled input
  */
 const StyledInput = styled.input`
   font-size: 1rem;
@@ -36,7 +36,7 @@ const StyledInput = styled.input`
 `;
 
 /**
- * 폼 하단에 로그인 혹은 회원가입 링크를 보여줌
+ * link to register or login form in the same form
  */
 const Footer = styled.div`
   margin-top: 2rem;
@@ -60,7 +60,7 @@ const textMap = {
 };
 
 /**
- * 에러를 보여줍니다
+ * show error message in text inside form
  */
 const ErrorMessage = styled.div`
   color: red;

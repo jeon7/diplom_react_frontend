@@ -14,7 +14,7 @@ const RegisterForm = ({ history }) => {
     authError: auth.authError,
     user: user.user,
   }));
-  // 인풋 변경 이벤트 핸들러
+  // while typing (input changes)
   const onChange = e => {
     const { value, name } = e.target;
     dispatch(
@@ -26,16 +26,14 @@ const RegisterForm = ({ history }) => {
     );
   };
 
-  // 폼 등록 이벤트 핸들러
   const onSubmit = e => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
-    // 하나라도 비어있다면
+    // check user input
     if ([username, password, passwordConfirm].includes('')) {
       setError('Complete the Form');
       return;
     }
-    // 비밀번호가 일치하지 않는다면
     if (password !== passwordConfirm) {
       setError('Password does not match');
       dispatch(changeField({ form: 'register', key: 'password', value: '' }));
@@ -47,20 +45,20 @@ const RegisterForm = ({ history }) => {
     dispatch(register({ username, password }));
   };
 
-  // 컴포넌트가 처음 렌더링 될 때 form 을 초기화함
+  // form is initialized when the component first rendered
   useEffect(() => {
     dispatch(initializeForm('register'));
   }, [dispatch]);
 
-  // 회원가입 성공 / 실패 처리
+  // register sucess or fail
   useEffect(() => {
     if (authError) {
-      // 계정명이 이미 존재할 때
+      // the account already exists
       if (authError.response.status === 409) {
         setError('This account already exists');
         return;
       }
-      // 기타 이유
+      // other reason
       setError('register fail');
       return;
     }
@@ -72,10 +70,9 @@ const RegisterForm = ({ history }) => {
     }
   }, [auth, authError, dispatch]);
 
-  // user 값이 잘 설정되었는지 확인
   useEffect(() => {
     if (user) {
-      history.push('/'); // 홈 화면으로 이동
+      history.push('/'); // go to homepage
       try {
         localStorage.setItem('user', JSON.stringify(user));
       } catch (e) {

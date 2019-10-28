@@ -14,7 +14,7 @@ const EditorContainer = () => {
   const onChangeField = useCallback(payload => dispatch(changeField(payload)), [
     dispatch,
   ]);
-  // 언마운트될 때 초기화
+  // initialize when unmount
   useEffect(() => {
     return () => {
       dispatch(initialize());

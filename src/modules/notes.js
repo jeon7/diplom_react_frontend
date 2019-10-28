@@ -34,7 +34,7 @@ const notes = handleActions(
     [LIST_NOTES_SUCCESS]: (state, { payload: notes, meta: response }) => ({
       ...state,
       notes,
-      lastPage: parseInt(response.headers['last-page'], 10), // 문자열을 숫자로 변환
+      lastPage: parseInt(response.headers['last-page'], 10),
     }),
     [LIST_NOTES_FAILURE]: (state, { payload: error }) => ({
       ...state,

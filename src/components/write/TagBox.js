@@ -59,12 +59,12 @@ const TagListBlock = styled.div`
   margin-top: 0.5rem;
 `;
 
-// React.memo를 사용하여 tag 값이 바뀔 때만 리렌더링되도록 처리
+// by using React.memo, rerender if tag is changed
 const TagItem = React.memo(({ tag, onRemove, onChangeTags }) => (
   <Tag onClick={() => onRemove(tag)}>#{tag}</Tag>
 ));
 
-// React.memo를 사용하여 tags 값이 바뀔 때만 리렌더링되도록 처리
+// by using React.memo, rerender if tags are changed
 const TagList = React.memo(({ tags, onRemove }) => (
   <TagListBlock>
     {tags.map(tag => (
@@ -79,8 +79,8 @@ const TagBox = ({ tags, onChangeTags }) => {
 
   const insertTag = useCallback(
     tag => {
-      if (!tag) return; // 공백이라면 추가하지 않음
-      if (localTags.includes(tag)) return; // 이미 존재한다면 추가하지 않음
+      if (!tag) return; // no tag added
+      if (localTags.includes(tag)) return; // if that tag already exists, it is added
       const nextTags = [...localTags, tag];
       setLocalTags(nextTags);
       onChangeTags(nextTags);
@@ -104,13 +104,13 @@ const TagBox = ({ tags, onChangeTags }) => {
   const onSubmit = useCallback(
     e => {
       e.preventDefault();
-      insertTag(input.trim()); // 앞뒤 공백 없앤 후 등록
-      setInput(''); // input 초기화
+      insertTag(input.trim());
+      setInput(''); // input field initialize
     },
     [input, insertTag],
   );
 
-  // tags 값이 바뀔 때
+  // if tags change
   useEffect(() => {
     setLocalTags(tags);
   }, [tags]);

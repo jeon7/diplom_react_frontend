@@ -40,7 +40,6 @@ const PortionView = styled.input`
 `;
 
 const Textarea = styled.textarea`
-  /* 최소 크기 지정 및 padding 제거 */
   padding: 0;
   min-height: 320px;
   font-size: 1rem;
@@ -52,7 +51,6 @@ const Textarea = styled.textarea`
 `;
 
 const NoteViewer = ({ note, error, loading, actionButtons, isBookmarked, onBookmarkAdd, onBookmarkRemove }) => {
-  // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
       return <NoteViewerBlock>Can not find the note</NoteViewerBlock>;
@@ -60,7 +58,7 @@ const NoteViewer = ({ note, error, loading, actionButtons, isBookmarked, onBookm
     return <NoteViewerBlock>NoteViwer Error!</NoteViewerBlock>;
   }
 
-  // 로딩중이거나, 아직 포스트 데이터가 없을 시
+  // if during loading or no note 
   if (loading || !note) {
     return null;
   }

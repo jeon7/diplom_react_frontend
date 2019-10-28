@@ -11,7 +11,6 @@ const SubInfoBlock = styled.div`
     `}
   color: ${palette.gray[6]};
 
-  /* span 사이에 가운뎃점 문자 보여주기*/
   span + span:before {
     color: ${palette.gray[4]};
     padding-left: 0.25rem;
